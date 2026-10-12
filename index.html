@@ -3,6 +3,1304 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HNA | Built for Athletes</title>
+<!-- Same font set as the HNA home page -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@700;900&family=JetBrains+Mono:wght@400;700&family=Work+Sans:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  /* HNA home page palette */
+  --bg: #0B0B0D;
+  --surface: #0f0f12;
+  --card: #111114;
+  --border: rgba(255,255,255,0.1);
+  --border-soft: rgba(255,255,255,0.06);
+  --white: #edeef2;
+  --dim: rgba(255,255,255,0.55);
+  --faint: rgba(255,255,255,0.3);
+  --accent: #6366f1;        /* home page glow color: dots, lines, borders only */
+  --accent-light: #edeef2;  /* glowing text uses the home page off-white */
+  --accent-deep: #111121;   /* button fill, same as home page Shop button */
+  --glow: rgba(99,102,241,0.35);      /* home page Shop button glow, used everywhere */
+  --glow-soft: rgba(99,102,241,0.18);
+  --sage: #a3a77a;          /* vine green */
+  --sage-dark: #929b70;
+
+  --f-display: 'Anton', sans-serif;
+  --f-hero: 'Inter Tight', sans-serif;
+  --f-mono: 'JetBrains Mono', monospace;
+  --f-body: 'Work Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: #fff;
+  font-family: var(--f-body);
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.1rem 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(11,11,13,0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--f-hero);
+  font-weight: 900;
+  font-size: 1.6rem;
+  letter-spacing: -0.06em;
+  color: #fff;
+}
+
+.nav-tag {
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.nav-back {
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-decoration: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav-back:hover { color: #fff; border-color: rgba(255,255,255,0.35); }
+
+@media(max-width:700px){ .nav-tag { display: none; } }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10rem 5vw 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(99,102,241,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 30%, rgba(99,102,241,0.12), transparent 60%);
+  pointer-events: none;
+}
+
+.hero-glow2 {
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 55vw;
+  height: 55vh;
+  background: radial-gradient(ellipse, rgba(163,167,122,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-inner { position: relative; z-index: 2; padding-bottom: 5rem; }
+
+.hero-label {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: slideUp 0.5s 0.2s forwards;
+}
+
+.hero h1 {
+  font-family: var(--f-hero);
+  font-weight: 900;
+  font-size: clamp(4.5rem, 13vw, 12rem);
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: slideUp 0.6s 0.35s forwards;
+}
+
+.hero h1 .line2 {
+  display: block;
+  color: var(--white);
+  text-shadow: 0 0 30px var(--glow), 0 0 60px var(--glow);
+}
+
+.hero h1 .line3 {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255,255,255,0.25);
+}
+
+.hero-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 3rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: slideUp 0.6s 0.55s forwards;
+}
+
+.hero-desc {
+  max-width: 440px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--dim);
+}
+
+.hero-desc strong { color: #fff; font-weight: 700; }
+
+.hero-stat-row {
+  display: flex;
+  gap: 2.5rem;
+  flex-shrink: 0;
+}
+
+.h-stat { text-align: right; }
+.h-stat .n {
+  font-family: var(--f-display);
+  font-size: 2.8rem;
+  color: #fff;
+  line-height: 1;
+}
+.h-stat .l {
+  font-family: var(--f-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-top: 0.35rem;
+}
+
+/* ── SCOREBOARD TICKER (matches home hero) ── */
+.ticker {
+  position: relative;
+  z-index: 2;
+  margin: 0 -5vw;
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+}
+
+.ticker-track {
+  display: flex;
+  white-space: nowrap;
+  padding: 0.75rem 0;
+  width: max-content;
+  animation: ticker 22s linear infinite;
+}
+
+.ticker-track span {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin: 0 1.5rem;
+}
+
+.ticker-track span b { color: var(--white); font-weight: 700; }
+
+/* ── SECTIONS ── */
+section { position: relative; z-index: 1; }
+
+.sec {
+  padding: 6rem 5vw;
+}
+
+.sec-inner { max-width: 80rem; margin: 0 auto; }
+
+.sec-label {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--white);
+  text-shadow: 0 0 14px var(--glow);
+  margin-bottom: 0.8rem;
+}
+
+.sec h2 {
+  font-family: var(--f-display);
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 2rem;
+}
+
+.accent-text { color: var(--white); text-shadow: 0 0 30px var(--glow), 0 0 60px var(--glow-soft); }
+
+/* ── PROBLEM / OPPORTUNITY ── */
+.opp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 3rem;
+}
+
+@media(max-width:700px){ .opp-grid { grid-template-columns: 1fr; } }
+
+.opp-cell {
+  background: var(--bg);
+  padding: 2.5rem;
+}
+
+.opp-cell.highlight {
+  background: linear-gradient(180deg, rgba(99,102,241,0.08), rgba(99,102,241,0.02)), var(--bg);
+  box-shadow: inset 3px 0 0 var(--accent), inset 14px 0 24px -14px var(--glow);
+}
+
+.opp-cell h3 {
+  font-family: var(--f-body);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.opp-cell.highlight h3 { color: var(--accent-light); text-shadow: 0 0 18px var(--glow-soft); }
+
+.opp-cell p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--dim);
+}
+
+.opp-cell p strong { color: #fff; font-weight: 600; }
+
+/* ── HOW IT WORKS ── */
+.deal-bg {
+  background: radial-gradient(circle at center, rgba(99,102,241,0.07), transparent 70%);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.deal-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 5rem;
+  align-items: center;
+}
+@media(max-width:800px){ .deal-layout { grid-template-columns: 1fr; gap: 3rem; } }
+
+.deal-left p {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--dim);
+  margin-bottom: 1rem;
+}
+.deal-left p strong { color: #fff; font-weight: 600; }
+
+.deal-steps {
+  display: flex;
+  flex-direction: column;
+}
+
+.ds {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+  position: relative;
+}
+
+.ds:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 1.75rem;
+  top: 3.5rem;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  box-shadow: 0 0 8px var(--glow);
+  opacity: 0.5;
+  transform: translateX(-50%);
+}
+
+.ds-num-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 2rem;
+}
+
+.ds-num {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 1px solid rgba(99,102,241,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--white);
+  background: rgba(99,102,241,0.1);
+  box-shadow: 0 0 22px var(--glow);
+  flex-shrink: 0;
+}
+
+.ds-body {
+  padding: 0.5rem 0 2.5rem;
+}
+
+.ds-body h4 {
+  font-family: var(--f-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.35rem;
+}
+
+.ds-body p {
+  font-size: 0.9rem;
+  color: var(--dim);
+  line-height: 1.6;
+}
+
+/* ── TOOLS ── */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+@media(max-width:900px){ .tools-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:560px){ .tools-grid { grid-template-columns: 1fr; } }
+
+.tool-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem 1.8rem;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.tool-card:hover {
+  border-color: rgba(99,102,241,0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 0 30px var(--glow-soft);
+}
+
+.tool-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.tool-icon { font-size: 1.8rem; }
+
+.tool-code {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.25);
+}
+
+.tool-card h3 {
+  font-family: var(--f-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.tool-card p {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--dim);
+}
+
+.tool-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 100px;
+  font-family: var(--f-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: rgba(99,102,241,0.08);
+  color: rgba(255,255,255,0.65);
+  border: 1px solid rgba(99,102,241,0.4);
+}
+
+.tool-badge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* ── PRODUCTS ── */
+.products-bg {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.products-intro {
+  color: var(--dim);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 520px;
+}
+
+.product-shelf {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin-top: 3rem;
+}
+@media(max-width:900px){ .product-shelf { grid-template-columns: repeat(3,1fr); } }
+@media(max-width:500px){ .product-shelf { grid-template-columns: repeat(2,1fr); } }
+
+.product-tile {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.8rem 1.2rem 1.4rem;
+  text-align: center;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+.product-tile:hover {
+  border-color: rgba(99,102,241,0.45);
+  box-shadow: 0 0 30px var(--glow-soft);
+  transform: translateY(-3px);
+}
+
+.product-tile .emoji {
+  font-size: 2.4rem;
+  display: block;
+  margin-bottom: 0.9rem;
+}
+
+.product-tile .name {
+  font-family: var(--f-mono);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.product-tile .sub {
+  font-size: 0.78rem;
+  color: var(--dim);
+  margin-top: 0.3rem;
+}
+
+/* ── PRODUCTION ── */
+.print-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+@media(max-width:800px){ .print-layout { grid-template-columns: 1fr; gap: 3rem; } }
+
+.print-left p {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--dim);
+  margin-bottom: 1rem;
+}
+.print-left p strong { color: #fff; font-weight: 600; }
+
+/* Spec sheet: same gap-px grid as the home page "Why HNA" section */
+.print-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.spec-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg);
+  padding: 1.1rem 1.5rem;
+  gap: 1rem;
+}
+
+.spec-key {
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+.spec-val-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.spec-val {
+  font-family: var(--f-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #fff;
+  text-align: right;
+}
+
+.spec-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sage);
+  flex-shrink: 0;
+}
+
+.spec-dot.accent { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+
+/* ── WHO IS THIS FOR ── */
+.for-bg {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.for-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+@media(max-width:650px){ .for-grid { grid-template-columns: 1fr; } }
+
+.for-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.for-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.for-card.c1::before { background: linear-gradient(to right, var(--accent), transparent); }
+.for-card.c2::before { background: linear-gradient(to right, var(--accent-light), transparent); }
+.for-card.c3::before { background: linear-gradient(to right, var(--sage), transparent); }
+.for-card.c4::before { background: linear-gradient(to right, var(--white), transparent); }
+
+.for-card h3 {
+  font-family: var(--f-body);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.for-card p {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--dim);
+}
+
+/* ── STANDARDS ── */
+.standards-bg {
+  background: radial-gradient(circle at center, rgba(99,102,241,0.06), transparent 70%);
+  border-bottom: 1px solid var(--border);
+}
+
+.standards-intro {
+  max-width: 620px;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--dim);
+}
+
+.standards-intro strong { color: #fff; font-weight: 600; }
+
+.req-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 3rem;
+}
+@media(max-width:700px){ .req-grid { grid-template-columns: 1fr; } }
+
+.req-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.8rem;
+  display: flex;
+  gap: 1.1rem;
+  align-items: flex-start;
+}
+
+.req-check {
+  flex-shrink: 0;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background: rgba(163,167,122,0.12);
+  border: 1px solid rgba(163,167,122,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sage);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.req-body h3 {
+  font-family: var(--f-body);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+
+.req-body p {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--dim);
+}
+
+.standards-note {
+  margin-top: 2.5rem;
+  padding: 1.3rem 1.6rem;
+  border-left: 3px solid var(--accent);
+  box-shadow: -6px 0 18px -8px var(--glow);
+  background: rgba(99,102,241,0.07);
+  border-radius: 0 12px 12px 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--white);
+  max-width: 640px;
+}
+
+/* ── CTA (matches home "Brand Application" block) ── */
+.cta-sec {
+  text-align: center;
+  padding: 6rem 5vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-sec::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(99,102,241,0.08), transparent 70%);
+  pointer-events: none;
+}
+
+.cta-sec::after {
+  content: 'HNA';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--f-hero);
+  font-weight: 900;
+  letter-spacing: -0.08em;
+  font-size: 24vw;
+  color: rgba(255,255,255,0.025);
+  pointer-events: none;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.cta-inner { position: relative; z-index: 1; max-width: 48rem; margin: 0 auto; }
+
+.cta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 100px;
+  padding: 0.4rem 1rem;
+  margin-bottom: 2rem;
+  background: rgba(99,102,241,0.08);
+  border: 1px solid rgba(99,102,241,0.4);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
+.cta-pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.cta-sec h2 {
+  font-family: var(--f-display);
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  text-transform: uppercase;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.cta-sec h2 span { color: var(--white); text-shadow: 0 0 30px var(--glow), 0 0 60px var(--glow-soft); }
+
+.cta-sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.5);
+  max-width: 520px;
+  margin: 1.4rem auto 2.5rem;
+  line-height: 1.7;
+}
+
+.cta-badges {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Buttons: same as home page */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.1rem 2.5rem;
+  border-radius: 8px;
+  font-family: var(--f-body);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn.primary {
+  background: var(--accent-deep);
+  color: var(--white);
+  font-weight: 900;
+  box-shadow: 0 0 30px var(--glow);
+}
+
+.btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(99,102,241,0.5);
+}
+
+.btn.secondary {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+}
+
+.btn.secondary:hover { border-color: #fff; }
+
+.cta-fine {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-top: 1.4rem;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-logo {
+  font-family: var(--f-hero);
+  font-weight: 900;
+  font-size: 1.3rem;
+  letter-spacing: -0.06em;
+  color: #fff;
+}
+
+.footer-right {
+  font-family: var(--f-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+  .hero-label, .hero h1, .hero-bottom { animation: none; opacity: 1; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">HNA</div>
+  <div class="nav-tag">Human Nature Athletica · Athlete Program</div>
+  <a href="/" class="nav-back">← Back to Store</a>
+</nav>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="hero-inner">
+    <div class="hero-label">Human Nature Athletica · Athlete Brand Program</div>
+    <h1>
+      Build Your<br/>
+      <span class="line2">Brand.</span>
+      <span class="line3">Own It.</span>
+    </h1>
+    <div class="hero-bottom">
+      <p class="hero-desc">
+        <strong>HNA gives athletes everything they need</strong> to launch and grow their own personal brand: software dashboards, merch design, order fulfillment, and an in-house screen printing shop that handles it all.
+      </p>
+      <div class="hero-stat-row">
+        <div class="h-stat">
+          <div class="n">ANY</div>
+          <div class="l">Level Welcome</div>
+        </div>
+        <div class="h-stat">
+          <div class="n">0</div>
+          <div class="l">Upfront Cost</div>
+        </div>
+        <div class="h-stat">
+          <div class="n">100%</div>
+          <div class="l">Your Brand</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scoreboard ticker, same as the home page hero -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="ticker-track"></div>
+  </div>
+</header>
+
+<!-- ── OPPORTUNITY ── -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-label reveal">The Problem & The Opportunity</div>
+    <h2 class="reveal">Athletes<br/>are a brand.<br/><span class="accent-text">Most just don't know it yet.</span></h2>
+    <div class="opp-grid reveal">
+      <div class="opp-cell">
+        <h3>The Old Reality</h3>
+        <p>Athletes spend years building a following, a reputation, and a fanbase, and most of that value disappears the moment their career ends. <strong>No brand. No income stream. No legacy.</strong> Just a highlight reel.</p>
+      </div>
+      <div class="opp-cell highlight">
+        <h3>The HNA Opportunity</h3>
+        <p>Social platforms changed everything. Athletes can now monetize their name, image, and following while they're still competing, no matter their level or league. <strong>HNA is the infrastructure to make that real</strong>: a full brand building platform purpose built for athletes.</p>
+      </div>
+      <div class="opp-cell highlight">
+        <h3>What HNA Solves</h3>
+        <p>Most athletes don't know how to design products, set up an online store, handle orders, or manage fulfillment. <strong>HNA handles every single one of those things</strong>. Athletes just show up and lead.</p>
+      </div>
+      <div class="opp-cell">
+        <h3>Why Now</h3>
+        <p>The window to build a brand is during your career, when you have <strong>an active audience, community loyalty, and momentum</strong>. HNA lets you activate that window before it closes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="sec deal-bg" id="program">
+  <div class="sec-inner deal-layout">
+    <div class="deal-left reveal">
+      <div class="sec-label">How It Works</div>
+      <h2>Your brand.<br/>Our engine.</h2>
+      <p>HNA handles the business side so you can stay focused on competing. We sign you, build your brand line, set up your store, print your products in-house, and ship them while you earn.</p>
+      <p>This isn't a sponsorship or a one time merch deal. <strong>This is your brand, built under your name, with your identity for the long run.</strong></p>
+    </div>
+    <div class="deal-steps reveal reveal-delay-1">
+      <div class="ds">
+        <div class="ds-num-wrap"><div class="ds-num">01</div></div>
+        <div class="ds-body">
+          <h4>You Sign With HNA</h4>
+          <p>We onboard you to the platform, set up your athlete profile, and begin the brand development process around your name and story.</p>
+        </div>
+      </div>
+      <div class="ds">
+        <div class="ds-num-wrap"><div class="ds-num">02</div></div>
+        <div class="ds-body">
+          <h4>We Design Your Line</h4>
+          <p>Your signature collection of tees, hoodies, hats, keychains, and more. Branded to you, designed by our team, ready to launch.</p>
+        </div>
+      </div>
+      <div class="ds">
+        <div class="ds-num-wrap"><div class="ds-num">03</div></div>
+        <div class="ds-body">
+          <h4>Your Store Goes Live</h4>
+          <p>Your personal storefront on the HNA Vault platform is live. Your fans, training partners, and followers can shop your brand directly.</p>
+        </div>
+      </div>
+      <div class="ds">
+        <div class="ds-num-wrap"><div class="ds-num">04</div></div>
+        <div class="ds-body">
+          <h4>We Print & Fulfill</h4>
+          <p>Our in-house screen printing shop handles every order: printed, packed, and shipped. Zero logistics stress on your end.</p>
+        </div>
+      </div>
+      <div class="ds">
+        <div class="ds-num-wrap"><div class="ds-num">05</div></div>
+        <div class="ds-body">
+          <h4>You Track & Earn</h4>
+          <p>Your athlete dashboard shows real time sales, earnings, and brand growth. Revenue comes back to you. Your brand keeps building.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TOOLS ── -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-label reveal">The Platform</div>
+    <h2 class="reveal">Every tool<br/>you need.</h2>
+    <div class="tools-grid">
+      <div class="tool-card reveal">
+        <div class="tool-top"><span class="tool-icon">📊</span><span class="tool-code">TOOL · 01</span></div>
+        <h3>Athlete Dashboard</h3>
+        <p>Your personal command center. See sales in real time, track earnings, view brand performance, and monitor your growth, all in one place.</p>
+        <span class="tool-badge">Live Data</span>
+      </div>
+      <div class="tool-card reveal reveal-delay-1">
+        <div class="tool-top"><span class="tool-icon">🛒</span><span class="tool-code">TOOL · 02</span></div>
+        <h3>Your Own Storefront</h3>
+        <p>A dedicated store page under your name on HNA Vault. Fans shop directly. No setup required on your end. It's built and managed for you.</p>
+        <span class="tool-badge">Branded to You</span>
+      </div>
+      <div class="tool-card reveal reveal-delay-2">
+        <div class="tool-top"><span class="tool-icon">📦</span><span class="tool-code">TOOL · 03</span></div>
+        <h3>Order Fulfillment</h3>
+        <p>Every order is tracked from purchase to delivery. Our vendor portal connects your store directly to our screen printing shop for seamless fulfillment.</p>
+        <span class="tool-badge">Automated</span>
+      </div>
+      <div class="tool-card reveal">
+        <div class="tool-top"><span class="tool-icon">💰</span><span class="tool-code">TOOL · 04</span></div>
+        <h3>Earnings Tracker</h3>
+        <p>Know exactly what you've made. Track sales totals, commissions, pending payouts, and historical performance across all your products.</p>
+        <span class="tool-badge">Transparent</span>
+      </div>
+      <div class="tool-card reveal reveal-delay-1">
+        <div class="tool-top"><span class="tool-icon">🎨</span><span class="tool-code">TOOL · 05</span></div>
+        <h3>Brand Assets Hub</h3>
+        <p>Access your logos, product mockups, and promotional materials whenever you need them, ready to post, share, or send to your community.</p>
+        <span class="tool-badge">Ready to Post</span>
+      </div>
+      <div class="tool-card reveal reveal-delay-2">
+        <div class="tool-top"><span class="tool-icon">📣</span><span class="tool-code">TOOL · 06</span></div>
+        <h3>Affiliate System</h3>
+        <p>Share your unique link. When your training partners, fans, or followers shop through it, you earn. Turn your network into revenue without lifting a finger.</p>
+        <span class="tool-badge">Passive Income</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRODUCTS ── -->
+<section class="sec products-bg">
+  <div class="sec-inner">
+    <div class="sec-label reveal">HNA · The Products</div>
+    <h2 class="reveal">Premium merch.<br/>Printed in-house.</h2>
+    <p class="products-intro reveal">
+      Every product in your line is made by our own screen printing shop. Quality controlled, fast turnaround, no outsourcing. Your brand on products your fans actually want.
+    </p>
+    <div class="product-shelf">
+      <div class="product-tile reveal">
+        <span class="emoji">👕</span>
+        <div class="name">T-Shirts</div>
+        <div class="sub">Signature tees</div>
+      </div>
+      <div class="product-tile reveal reveal-delay-1">
+        <span class="emoji">🧥</span>
+        <div class="name">Hoodies</div>
+        <div class="sub">Pullover & zip</div>
+      </div>
+      <div class="product-tile reveal reveal-delay-2">
+        <span class="emoji">🧢</span>
+        <div class="name">Hats</div>
+        <div class="sub">Caps & beanies</div>
+      </div>
+      <div class="product-tile reveal">
+        <span class="emoji">🔑</span>
+        <div class="name">Keychains</div>
+        <div class="sub">Branded accessories</div>
+      </div>
+      <div class="product-tile reveal reveal-delay-1">
+        <span class="emoji">🎽</span>
+        <div class="name">Athlete Kits</div>
+        <div class="sub">Bundle drops</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRODUCTION ── -->
+<section class="sec">
+  <div class="sec-inner print-layout">
+    <div class="print-left reveal">
+      <div class="sec-label">In-House Production</div>
+      <h2>We print it.<br/>We ship it.<br/><span class="accent-text">You earn.</span></h2>
+      <p>HNA runs its own <strong>closed-loop screen printing operation</strong>. That means when a fan buys your hoodie at 11pm, it's already queued for production. No third party, no wait, no quality surprises.</p>
+      <p>This is our biggest advantage. <strong>We control the full supply chain</strong> from design approval to the box landing on your fan's doorstep.</p>
+      <p>Athletes never touch inventory, deal with shipping, or worry about stockouts. <strong>That's our job.</strong></p>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="sec-label">Spec Sheet</div>
+      <div class="print-specs">
+        <div class="spec-row">
+          <span class="spec-key">Production</span>
+          <div class="spec-val-wrap"><span class="spec-dot"></span><span class="spec-val">In-House Screen Printing</span></div>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Order Routing</span>
+          <div class="spec-val-wrap"><span class="spec-dot"></span><span class="spec-val">Automated via HNA Vault</span></div>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Fulfillment</span>
+          <div class="spec-val-wrap"><span class="spec-dot"></span><span class="spec-val">Packed & Shipped by HNA</span></div>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Quality Control</span>
+          <div class="spec-val-wrap"><span class="spec-dot"></span><span class="spec-val">Internal Review Every Order</span></div>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Athlete Involvement</span>
+          <div class="spec-val-wrap"><span class="spec-dot accent"></span><span class="spec-val">Zero Logistics Required</span></div>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">Tracking</span>
+          <div class="spec-val-wrap"><span class="spec-dot"></span><span class="spec-val">Live in Athlete Dashboard</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHO IS THIS FOR ── -->
+<section class="sec for-bg">
+  <div class="sec-inner">
+    <div class="sec-label reveal">Who This Is For</div>
+    <h2 class="reveal">Any athlete.<br/>Any sport.</h2>
+    <div class="for-grid">
+      <div class="for-card c1 reveal">
+        <h3>🏈 Team Sport Athletes</h3>
+        <p>Semi-pro, club, or pro. Football, basketball, baseball, volleyball: if you've got a fanbase that wears your team colors, they'll wear your brand too. HNA turns every matchday into a revenue stream.</p>
+      </div>
+      <div class="for-card c2 reveal reveal-delay-1">
+        <h3>🏃 Individual Sport Athletes</h3>
+        <p>Track, swimming, wrestling, tennis. Individual athletes often have the most loyal followings. HNA gives them a brand that's entirely their own story.</p>
+      </div>
+      <div class="for-card c3 reveal">
+        <h3>🥊 Combat & Extreme Sports</h3>
+        <p>Fighters, wrestlers, skaters: athletes with edge and attitude. HNA's brand development process leans into your personality and turns it into products people want.</p>
+      </div>
+      <div class="for-card c4 reveal reveal-delay-1">
+        <h3>⚽ Independent & Amateur Athletes</h3>
+        <p>No league contract, no agency behind you. Just you, your training, and your following. If you're competing and building an audience, HNA helps you build the brand infrastructure before the spotlight hits.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STANDARDS ── -->
+<section class="sec standards-bg">
+  <div class="sec-inner">
+    <div class="sec-label reveal">Who We Partner With</div>
+    <h2 class="reveal">We do the work.<br/>We want athletes<br/>who do too.</h2>
+    <p class="standards-intro reveal">Building a real brand takes effort on both sides. <strong>We're selective about who joins HNA</strong> because this is a long-term partnership, not a one-time merch drop and it only works with athletes who are handling their business the right way, on and off the field.</p>
+
+    <div class="req-grid">
+      <div class="req-card reveal">
+        <div class="req-check">✓</div>
+        <div class="req-body">
+          <h3>Committed To The Craft</h3>
+          <p>Training consistently and competing at a serious level. A brand only means something if there's real work behind it.</p>
+        </div>
+      </div>
+      <div class="req-card reveal reveal-delay-1">
+        <div class="req-check">✓</div>
+        <div class="req-body">
+          <h3>In Good Standing</h3>
+          <p>No red flags that put your name or ours at risk. Clear eligibility, a clean reputation, and a healthy relationship with your sport.</p>
+        </div>
+      </div>
+      <div class="req-card reveal reveal-delay-2">
+        <div class="req-check">✓</div>
+        <div class="req-body">
+          <h3>Coachable On Brand</h3>
+          <p>Willing to take direction on how your brand is built and presented, the same way you'd take coaching on your sport.</p>
+        </div>
+      </div>
+      <div class="req-card reveal">
+        <div class="req-check">✓</div>
+        <div class="req-body">
+          <h3>Reliable & Communicative</h3>
+          <p>Shows up, follows through, responds. This is a partnership we need to be able to count on you, and you on us.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="standards-note reveal">If you're putting the work in and handling your business the right way, we want to build with you. Every application is reviewed individually, with Honor and Respect we're not signing everyone.</div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-sec" id="apply">
+  <div class="cta-inner">
+    <div class="cta-pill reveal">HNA Athlete Application</div>
+    <h2 class="reveal">Your name.<br/>Your brand.<br/><span>Your income.</span></h2>
+    <p class="cta-sub reveal">HNA gives serious, dependable athletes the full infrastructure to build, launch, and grow a real brand while they're still competing.</p>
+    <div class="cta-badges reveal">
+      <a href="#apply" class="btn primary">Apply to Join HNA →</a>
+      <a href="#program" class="btn secondary">Learn More About the Program</a>
+    </div>
+    <p class="cta-fine reveal">No upfront cost · Your brand · Your rules</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">HNA</div>
+  <div class="footer-right">Human Nature Athletica · Athlete Brand Program · humannatureathletica.com</div>
+</footer>
+
+<script>
+// Ticker: same items as the home page
+const TICKER_ITEMS = ["ATHLETE OWNED", "FREE FULFILLMENT", "BRAND STOREFRONTS", "NO UPFRONT COST", "DESIGN SUPPORT"];
+const track = document.getElementById('ticker-track');
+[...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS].forEach(item => {
+  const span = document.createElement('span');
+  span.innerHTML = item + ' <b>•</b>';
+  track.appendChild(span);
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 60);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>HNA — Built for Athletes</title>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,300;0,400;0,600;1,400&family=Barlow+Condensed:wght@500;700;900&display=swap" rel="stylesheet"/>
 <style>
@@ -1120,7 +2418,7 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 
 
-
+ -->
 
 
 
